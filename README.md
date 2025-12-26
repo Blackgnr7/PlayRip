@@ -1,4 +1,4 @@
-# TubeDowloader
+# PlayRip
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/Blackgnr7/tubedowloader?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/Blackgnr7/tubedowloader?style=for-the-badge)
@@ -14,6 +14,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Ser capaz de escolher se quer em mp4 ou em mp3
 - [x] dowloader automatico em qualquer sistema operacional
 - [x] capaz de abaixar no spotify
+- [x] ser capaz de usar em blibioteca python
 - [ ] Ser capaz de instalar uma playlist inteira
 
 ## 💻 Pré-requisitos
@@ -21,13 +22,15 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 - Você instalou a versão mais recente de `Python / Requests,eyed3,mutagen,FFmpeg,pydub,pytubefix,spotipy`
-- Você tem uma máquina `Linux,Macos,Windows`. Indique qual sistema operacional é compatível / não compatível.
+- Você tem uma máquina `Linux,Macos,Windows`.
 
 ## 🚀 Instalando TubeDowloader manualmente 
 
 Para instalar o TubeDowloader, siga estas etapas:
 
-- Apenas da um git clone e execute em administrador o install.exe, e siga os passos
+```
+pip install PlayRip
+```
 
 ## ☕ Usando TubeDowloader
 
