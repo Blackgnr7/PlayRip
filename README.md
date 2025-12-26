@@ -29,7 +29,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 Para instalar o TubeDowloader, siga estas etapas:
 
 ```
-pip install PlayRip
+pip install playrip
 ```
 
 ## ☕ Usando TubeDowloader
