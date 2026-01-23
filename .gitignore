@@ -1,2 +1,7 @@
 .vscode/
-playrip/
+playrip/tests/
+playrip/poetry.lock
+playrip/pyproject.toml
+playrip/README.md
+playrip/dist
+playrip/src/playrip/__pycache__
