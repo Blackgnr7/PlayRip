@@ -5,7 +5,7 @@ import eyed3
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from pytubefix import YouTube
-import logging  
+import logging
 
 logging.getLogger("spotipy").setLevel(logging.CRITICAL)
 diretorio_destino = os.path.expanduser("~/Downloads")
@@ -36,13 +36,12 @@ def Youtube(url, formato_do_audio, thumbnail):
             audiofile.initTag()
         audiofile.tag.artist = artist
         if thumbnail:
-            get.thumbnail(url=url,info=None,diretorio_destino=diretorio_destino)
+            get.thumbnail(url=url,diretorio_destino=diretorio_destino)
             with open(f"{diretorio_destino}/capa.jpg", "rb") as img_file:
                 img_data = img_file.read()
             audiofile.tag.images.set(3, img_data, "image/jpeg")
         audiofile.tag.save()
         os.remove(f"{diretorio_destino}/capa.jpg")
-        os.remove(f"{caminho_arquivo}")
     if formato_do_audio.lower() == "mp4":
         yt = YouTube(url)
         artist = yt.author
@@ -94,14 +93,9 @@ def Spotify(url, thumbnail):
         audiofile.initTag()
     audiofile.tag.artist = track_info["album"]["artists"][0]["name"]
     if thumbnail:
-        get.thumbnail(url=url, info=track_info, diretorio_destino=diretorio_destino)
+        get.thumbnail(url=url, diretorio_destino=diretorio_destino)
         with open(f"{diretorio_destino}/capa.jpg", "rb") as img_file:
             img_data = img_file.read()
         audiofile.tag.images.set(3, img_data, "image/jpeg")
     audiofile.tag.save()
     os.remove(f"{diretorio_destino}/capa.jpg")
-    os.remove(f"{diretorio_destino}/{Novo_titulo_spotify}.m4a")
-    try:
-        os.remove(".cache")
-    except Exception as e:
-        pass
