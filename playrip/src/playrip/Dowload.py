@@ -62,7 +62,7 @@ def Youtube(url, formato_do_audio, thumbnail):
         video = MP4(caminho_arquivo)
         video["\xa9ART"] = artist
         if thumbnail:
-            get.thumbnail(url=url,info=None,diretorio_destino=diretorio_destino)
+            get.thumbnail(url=url,diretorio_destino=diretorio_destino)
             with open(f"{diretorio_destino}/capa.jpg", "rb") as img_file:
                 img_data = img_file.read()
             video["covr"] = [MP4Cover(img_data, imageformat=MP4Cover.FORMAT_JPEG)]
