@@ -70,16 +70,8 @@ def Spotify(url, thumbnail):
     res = requests.get(url, headers=headers)
     soup = BeautifulSoup(res.text, "html.parser")
     thumb = soup.find("meta", property="og:image")["content"]
-    titulo = soup.title.string
-    titulo = titulo.replace(" | Spotify", "").replace("song and lyrics by ", "")
-    if " - " in titulo:
-        titulo_spotify, artista = titulo.split(" - ", 1)
-    else:
-        titulo_spotify = titulo
-        artista = ""
-    if artista == "":
-        titulo_spotify = soup.find("meta", property="og:title")["content"]
-        artista = soup.find("meta", property="og:description")["content"].split(" · ")[0]
+    titulo_spotify = soup.find("meta", property="og:title")["content"]
+    artista = soup.find("meta", property="og:description")["content"].split(" · ")[0]
     Novo_titulo_spotify = (
         titulo_spotify.replace("/", "")
         .replace("|", "")
@@ -90,6 +82,8 @@ def Spotify(url, thumbnail):
         .replace(":", "")
         .replace("\\", "")
     )
+    if f" - Single by {artista}  Spotify" in Novo_titulo_spotify:
+        Novo_titulo_spotify = Novo_titulo_spotify.replace(f" - Single by {artista}  Spotify", "")
     print(f"titulo da musica do spotify: {titulo_spotify}\n")
     get.audio(artista=artista, titulo_da_musica=Novo_titulo_spotify, diretorio_destino=diretorio_destino)
     audiofile = eyed3.load(f"{diretorio_destino}/{Novo_titulo_spotify}.mp3")
