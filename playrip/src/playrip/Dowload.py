@@ -74,7 +74,6 @@ def Spotify(url, thumbnail):
     artista = soup.find("meta", property="og:description")["content"].split(" · ")[0]
     if ", " in artista:
         artista = artista.split(", ")[0]
-    print(artista)
     Novo_titulo_spotify = (
         titulo_spotify.replace("/", "")
         .replace("|", "")
