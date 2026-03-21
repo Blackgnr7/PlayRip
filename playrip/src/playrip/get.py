@@ -7,11 +7,6 @@ import os
 from pydub import AudioSegment
 from pytubefix import Search, YouTube
 import subprocess
-import logging
-
-logging.getLogger("spotipy").setLevel(logging.CRITICAL)
-client_id = "82190b6d4e6d4250a7e8d5a16a29443c"
-client_secret = "eb3c7e469f40400b941dc05116cfc55b"
 
 
 def id(url):
@@ -29,20 +24,11 @@ def id(url):
         return None
 
 
-def thumbnail(url, diretorio_destino):
-    if "spotify" in url:
-        auth_manager = SpotifyClientCredentials(
-            client_id=client_id, client_secret=client_secret
-        )
-        sp = spotipy.Spotify(auth_manager=auth_manager)
-        track_info = sp.track(url)
-        res = requests.get(track_info["album"]["images"][0]["url"], stream=True)
+def thumbnail(diretorio_destino, url):
+    if "i.scdn.co" in url:
+        res = requests.get(url, stream=True)
         with open(f"{diretorio_destino}/capa.jpg", "wb") as out_file:
             shutil.copyfileobj(res.raw, out_file)
-        try:
-            os.remove(".cache")
-        except Exception as e:
-            pass
     if "youtu" in url:
         codigo = id(url=url)
         thumbnail_para_abaixar = (
@@ -53,27 +39,9 @@ def thumbnail(url, diretorio_destino):
             shutil.copyfileobj(res.raw, out_file)
 
 
-def audio(url, diretorio_destino):
-    if "spotify" in url:
-        auth_manager = SpotifyClientCredentials(
-            client_id=client_id, client_secret=client_secret
-        )
-        sp = spotipy.Spotify(auth_manager=auth_manager)
-        track_info = sp.track(url)
-        Novo_titulo_spotify = (
-            str(track_info["name"])
-            .replace("/", "")
-            .replace("|", "")
-            .replace("?", "")
-            .replace("*", "")
-            .replace("<", "")
-            .replace(">", "")
-            .replace(":", "")
-            .replace("\\", "")
-        )
-        results = Search(
-            f"{track_info["name"]}, {track_info["album"]["artists"][0]["name"]}"
-        )
+def audio(diretorio_destino, url=None, artista=None, titulo_da_musica=None):
+    if url == None:
+        results = Search(f"{titulo_da_musica}, {artista}")
         if results.videos:
             while True:
                 i = 0
@@ -98,18 +66,18 @@ def audio(url, diretorio_destino):
             )
             os.rename(
                 f"{diretorio_destino}/{titulo_novo1}.m4a",
-                f"{diretorio_destino}/{Novo_titulo_spotify}.m4a",
+                f"{diretorio_destino}/{titulo_da_musica}.m4a",
             )
             sound = AudioSegment.from_file(
-                f"{diretorio_destino}/{Novo_titulo_spotify}.m4a", format="m4a"
+                f"{diretorio_destino}/{titulo_da_musica}.m4a", format="m4a"
             )
-            sound.export(f"{diretorio_destino}/{Novo_titulo_spotify}.mp3", format="mp3")
-            os.remove(f"{diretorio_destino}/{Novo_titulo_spotify}.m4a")
+            sound.export(f"{diretorio_destino}/{titulo_da_musica}.mp3", format="mp3")
+            os.remove(f"{diretorio_destino}/{titulo_da_musica}.m4a")
             try:
                 os.remove(".cache")
             except Exception as e:
                 pass
-    if "youtu" in url:
+    elif "youtu" in url:
         yt = YouTube(url)
         titulo = yt.title
         titulo_novo1 = (
